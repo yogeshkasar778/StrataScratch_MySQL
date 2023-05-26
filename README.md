@@ -8,7 +8,7 @@
   
   ---
   
-  |user_id | int|
+  |user_id || int|
   
          occurred_at: datetime
          event_type: varchar
