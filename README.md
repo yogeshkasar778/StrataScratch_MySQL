@@ -14,7 +14,7 @@
     location: varchar
     device: varchar
     
- ###  Answer - 
+ ###  Solution - 
     
     select distinct count(*) as event_count, event_name
     from playbook_events
