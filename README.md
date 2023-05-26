@@ -2,7 +2,7 @@
 
 ## `Difficulty Level - Easy`
 
-## Count the number of user events performed by MacBookPro users
+Q.1 Count the number of user events performed by MacBookPro users
 
     Count the number of user events performed by MacBookPro users.
     Output the result along with the event name.
