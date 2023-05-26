@@ -12,3 +12,11 @@
     event_name: varchar
     location: varchar
     device: varchar
+    
+##  Answer - 
+    
+    select distinct count(*) as event_count, event_name
+    from playbook_events
+    where device = 'macbook pro'
+    group by event_name
+    order by event_count;
