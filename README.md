@@ -1,1 +1,1 @@
-# StrataScratch_MySQL
+# StrataScratch MySQL Question and Answer - 
