@@ -220,7 +220,8 @@ airbnb_search_details
     
     select home_library_code
     from employee
-    where provided_email_address = 0 and circulation_active_year = 2016 and notice_preference_definition = 'email';    
+    where provided_email_address = 0 and circulation_active_year = 2016 
+          and notice_preference_definition = 'email';    
     
     
     
