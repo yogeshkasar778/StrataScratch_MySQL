@@ -223,8 +223,52 @@ airbnb_search_details
     where provided_email_address = 0 and circulation_active_year = 2016 
           and notice_preference_definition = 'email';    
     
+ ### Q.9 Fine the base pay for Police Captains. Output the employee name along with the corresponding base pay. 
+   `Company Name - City of San Francisco`
+  
+  sf_public_salaries -
+  
+    id: int
+    employeename: varchar
+    jobtitle: varchar
+    basepay: float
+    overtimepay: float
+    otherpay: float
+    benefits: float
+    totalpay: float
+    totalpaybenefits: float
+    year: int
+    notes: datetime
+    agency: varchar
+    status: varchar
     
+ ###  Solution - 
     
+    select employeename, basepay
+    from sf_public_salaries
+    where jobtitle = 'CAPTAIN III (POLICE DEPARTMENT)';    
+        
+ ### Q.10 Find how many times each artist appeared on the Spotify ranking list. Output the artist name along with the corresponding number of occurrences. Order records by the number of occurrences in descending order.
+   `Company Name - Spotify`
+  
+  spotify_worldwide_daily_song_ranking -
+  
+    id: int
+    position: int
+    trackname: varchar
+    artist: varchar
+    streams: int
+    url: varchar
+    date: datetime
+    region: varchar
+    
+ ###  Solution - 
+    
+    select artist, count(artist) as number_of_occurrences
+    from  spotify_worldwide_daily_song_ranking 
+    group by artist
+    order by number_of_occurrences desc;    
+            
     
     
     
