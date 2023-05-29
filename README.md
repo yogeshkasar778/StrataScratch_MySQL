@@ -269,6 +269,77 @@ airbnb_search_details
     group by artist
     order by number_of_occurrences desc;    
             
+ ### Q.11 Find all Lyft drivers who earn eithers equal to or less than 30K USD or equal to more than 70K USD. Output all details related to retrived records.
+   `Company Name - Lyft`
+  
+  lyft_drivers -
+  
+    index: int
+    start_date: datetime
+    end_date: datetime
+    yearly_salary: int
+    
+ ###  Solution - 
+    
+    select *
+    from  lyft_drivers 
+    where yearly_salary <= 30000 or yearly_salary >= 70000;        
+    
+ ### Q.12 Meta/Facebook has developed a new programing language called Hack. To measure the popularity of Hack they ran a survey with their employees. The survey included data on previous programing familiarity as well as the number of years of experience, age, gender and most importantly satisfaction with Hack. Due to an error location data was not collected, but your supervisor demands a report showing average popularity of Hack by office location. Luckily the user IDs of employees completing the surveys were stored. Based on the above, find the average popularity of the Hack per office location.Output the location along with the average popularity.
+   `Company Name - Meta/Facebook`
+  
+  facebook_employees -
+  
+    id: int
+    location: varchar
+    age: int
+    gender: varchar
+    is_senior: bool
+    
+  facebook_hack_survey -
+  
+    employee_id: int
+    age: int
+    gender: varchar
+    popularity: int  
+    
+ ###  Solution - 
+    
+    select fe.location, avg(popularity) as avg_popularity
+    from  facebook_employees as fe 
+    left join facebook_hack_survey as fh
+    group by fe.location;            
+    
+ ### Q.13 Find all post which were reacted to with a heart. For such posts output all columns from facebook posts table.
+   `Company Name - Meta/Facebook`
+  
+  facebook_reactions -
+  
+    poster: int
+    friend: int
+    reaction: varchar
+    date_day: int
+    post_id: int
+    
+   facebook_posts -
+  
+    post_id: int
+    poster: int
+    post_text: varchar
+    post_keywords: varchar
+    post_date: datetime
+
+ ###  Solution - 
+    
+    select fp.*
+    from  facebook_reactions as fr
+    join facebook_posts as fp on fr.post_id = fp.post_id
+    where reaction = 'heart';     
+    
+    
+    
+    
+    
     
     
     
