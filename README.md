@@ -357,7 +357,7 @@ airbnb_search_details
     where nominee = 'Abigail Breslin'
     group by movie;         
     
- ### Q.14 Find the last time each bike was in use. Output both the bike number and the date-timestamp of the bike's last use (i.e., the date-time the bike was returned). Order the results by bikes that were most recently used.
+ ### Q.15 Find the last time each bike was in use. Output both the bike number and the date-timestamp of the bike's last use (i.e., the date-time the bike was returned). Order the results by bikes that were most recently used.
  
    `Company Name -  Lyft, DoorDash`
   
