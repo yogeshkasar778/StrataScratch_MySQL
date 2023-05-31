@@ -383,7 +383,58 @@ airbnb_search_details
     group by bike_number
     order by end_time desc;             
     
+ ### Q.16 We have a table with employees and their salaries, however, some of the records are old and contain outdated salary information. Find the current salary of each employee assuming that salaries increase each year. Output their id, first name, last name, department ID, and current salary. Order your list by employee ID in ascending order.
+ 
+   `Company Name -  Microsoft`
+  
+  ms_employee_salary -
+  
+    id: int
+    first_name: varchar
+    last_name: varchar
+    salary: int
+    department_id: int
     
+
+ ###  Solution - 
     
+    select 
+          id,
+          first_name,
+          last_name,
+          department_id,
+          max(salary) as current_salary
+    from  ms_employee_salary
+    group by id,
+             first_name,
+             last_name,
+             department_id
+    order by id asc;           
     
+   ### Q.17 Write a query that calculates the difference between the highest salaries found in the marketing and engineering departments. Output just the absolute difference in salaries.
+ 
+   `Company Name -  LinkedIn, Dropbox`
+  
+  db_employee -
+  
+    id: int
+    first_name: varchar
+    last_name: varchar
+    salary: int
+    department_id: int
     
+  db_dept -
+  
+    id: int
+    department: varchar
+    
+ ###  Solution - 
+    
+    select abs(max(a.salary) - max(b.salary)) as sal_diff
+    from db_employee a, db_employee b
+    where a.department_id = 4 and b.department_id = 1;       
+    
+## `Difficulty Level - Medium`
+
+
+
