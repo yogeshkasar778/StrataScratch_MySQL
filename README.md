@@ -436,5 +436,71 @@ airbnb_search_details
     
 ## `Difficulty Level - Medium`
 
+   ### Q.18 What were the top 10 ranked songs in 2010? Output the rank, group name, and song name but do not show the same song twice. Sort the result based on the year_rank in ascending order.
+ 
+   `Company Name -  Spotify`
+  
+  billboard_top_100_year_end -
+  
+    year: int
+    year_rank: int
+    group_name: varchar
+    artist: varchar
+    song_name: varchar
+    id: int
 
+    
+ ###  Solution - 
+    
+    select year_rank, group_name, song_name
+    from billboard_top_100_year_end 
+    where year = '2010'
+    order by year_rank asc
+    limit 10;  
 
+ ### Q.19 Classify each business as either a restaurant, cafe, school, or other.
+•	A restaurant should have the word 'restaurant' in the business name.
+•	A cafe should have either 'cafe', 'café', or 'coffee' in the business name.
+•	A school should have the word 'school' in the business name.
+•	All other businesses should be classified as 'other'.
+
+Output the business name and their classification.
+ 
+   `Company Name -  City of San Francisco`
+  
+  sf_restaurant_health_violations -
+  
+    business_id: int
+    business_name: varchar
+    business_address: varchar
+    business_city: varchar
+    business_state: varchar
+    business_postal_code: float
+    business_latitude: float
+    business_longitude: float
+    business_location: varchar
+    business_phone_number: float
+    inspection_id: varchar
+    inspection_date: datetime
+    inspection_score: float
+    inspection_type: varchar
+    violation_id: varchar
+    violation_description: varchar
+    risk_category: varchar
+
+    
+ ###  Solution - 
+    
+    select 
+       business_name,
+       case
+            when business_name like '%restaurant%' then 'restaurant'
+            when business_name like '%school%' then 'school'
+            when business_name like '%café%' then 'cafe'
+            when business_name like '%coffee%' then 'cafe'
+            when business_name like '%cafe%' then 'cafe'
+            else 'other' end as classification
+   from sf_restaurant_health_violations
+   group by binary business_name;  
+    
+    
