@@ -500,7 +500,7 @@ Output the business name and their classification.
             when business_name like '%coffee%' then 'cafe'
             when business_name like '%cafe%' then 'cafe'
             else 'other' end as classification
-   from sf_restaurant_health_violations
-   group by binary business_name;  
+    from sf_restaurant_health_violations
+    group by binary business_name;  
     
     
