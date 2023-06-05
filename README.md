@@ -602,34 +602,6 @@ Output the revenue along with the customer id and sort the results based on the 
     join employee em on e.manager_id = em.id
     where e.salary > em.salary;  
 
-### Q.24 Find employees who are earning more than their managers. Output the employee's first name along with the corresponding salary.
-
-   `Company Name -  Walmart, Best Buy, Dropbox`
-  
-  employee -
-  
-    id: int
-    first_name: varchar
-    last_name: varchar
-    age: int
-    sex: varchar
-    employee_title: varchar
-    department: varchar
-    salary: int
-    target: int
-    bonus: int
-    email: varchar
-    city: varchar
-    address: varchar
-    manager_id: int
-    
- ###  Solution - 
-    
-    select e.first_name, e.salary
-    from employee e
-    join employee em on e.manager_id = em.id
-    where e.salary > em.salary;  
-
 ### Q.25 Find the employee with the highest salary per department. Output the department name, employee's first name along with the corresponding salary.
 
    `Company Name -  Twitter, Asana`
