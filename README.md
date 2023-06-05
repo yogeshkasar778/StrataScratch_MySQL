@@ -533,7 +533,8 @@ Output the business name and their classification.
     from sf_restaurant_health_violations 
     where business_name = 'Roxanne Cafe'
     group by year
-    order by n_inspections asc;      
+    order by n_inspections asc;   
+    
 ### Q.21 Find the rate of processed tickets for each type.
  
    `Company Name -  Meta/Facebook`
@@ -549,3 +550,109 @@ Output the business name and their classification.
     select type, avg(processed) as processed_rate
     from facebook_complaints
     group by type;    
+
+### Q.22 Calculate the total revenue from each customer in March 2019. Include only customers who were active in March 2019.
+
+
+Output the revenue along with the customer id and sort the results based on the revenue in descending order.
+ 
+   `Company Name -  Amazon, Meta/Facebook`
+  
+  orders -
+  
+    id: int
+    cust_id: int
+    order_date: datetime
+    order_details: varchar
+    total_order_cost: int
+    
+ ###  Solution - 
+    
+    select cust_id, sum(total_order_cost) as revenue
+    from orders
+    where date(order_date) between '2019-03-01' and '2019-03-31'
+    group by cust_id
+    order by revenue desc;    
+
+### Q.23 Find employees who are earning more than their managers. Output the employee's first name along with the corresponding salary.
+
+   `Company Name -  Walmart, Best Buy, Dropbox`
+  
+  employee -
+  
+    id: int
+    first_name: varchar
+    last_name: varchar
+    age: int
+    sex: varchar
+    employee_title: varchar
+    department: varchar
+    salary: int
+    target: int
+    bonus: int
+    email: varchar
+    city: varchar
+    address: varchar
+    manager_id: int
+    
+ ###  Solution - 
+    
+    select e.first_name, e.salary
+    from employee e
+    join employee em on e.manager_id = em.id
+    where e.salary > em.salary;  
+
+### Q.24 Find employees who are earning more than their managers. Output the employee's first name along with the corresponding salary.
+
+   `Company Name -  Walmart, Best Buy, Dropbox`
+  
+  employee -
+  
+    id: int
+    first_name: varchar
+    last_name: varchar
+    age: int
+    sex: varchar
+    employee_title: varchar
+    department: varchar
+    salary: int
+    target: int
+    bonus: int
+    email: varchar
+    city: varchar
+    address: varchar
+    manager_id: int
+    
+ ###  Solution - 
+    
+    select e.first_name, e.salary
+    from employee e
+    join employee em on e.manager_id = em.id
+    where e.salary > em.salary;  
+
+### Q.25 Find the employee with the highest salary per department. Output the department name, employee's first name along with the corresponding salary.
+
+   `Company Name -  Twitter, Asana`
+  
+  employee -
+  
+    id: int
+    first_name: varchar
+    last_name: varchar
+    age: int
+    sex: varchar
+    employee_title: varchar
+    department: varchar
+    salary: int
+    target: int
+    bonus: int
+    email: varchar
+    city: varchar
+    address: varchar
+    manager_id: int
+    
+ ###  Solution - 
+    
+    select department, first_name, salary
+    from employee
+    where salary in (select max(salary) from employee group by department);  
