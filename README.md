@@ -602,7 +602,7 @@ Output the revenue along with the customer id and sort the results based on the 
     join employee em on e.manager_id = em.id
     where e.salary > em.salary;  
 
-### Q.25 Find the employee with the highest salary per department. Output the department name, employee's first name along with the corresponding salary.
+### Q.24 Find the employee with the highest salary per department. Output the department name, employee's first name along with the corresponding salary.
 
    `Company Name -  Twitter, Asana`
   
@@ -628,3 +628,68 @@ Output the revenue along with the customer id and sort the results based on the 
     select department, first_name, salary
     from employee
     where salary in (select max(salary) from employee group by department);  
+
+### Q.25 Find the highest target achieved by the employee or employees who works under the manager id 13. Output the first name of the employee and target achieved. The solution should show the highest target achieved under manager_id=13 and which employee(s) achieved it.
+
+   `Company Name -  Saleforce`
+  
+  salesforce_employees -
+  
+    id: int
+    first_name: varchar
+    last_name: varchar
+    age: int
+    sex: varchar
+    employee_title: varchar
+    department: varchar
+    salary: int
+    target: int
+    bonus: int
+    email: varchar
+    city: varchar
+    address: varchar
+    manager_id: int
+    
+ ###  Solution - 
+    
+    with target_achived as
+    (select first_name, target, rank() over(order by target desc) as rnk
+    from salesforce_employees
+    where manager_id = 13)
+    
+    select first_name, target
+    from target_achived
+    where rnk = 1;  
+
+### Q.26 Find the customer with the highest daily total order cost between 2019-02-01 to 2019-05-01. If customer had more than one order on a certain day, sum the order costs on daily basis. Output customer's first name, total cost of their items, and the date.
+
+For simplicity, you can assume that every first name in the dataset is unique.
+
+   `Company Name -  Amazon, Shofify`
+  
+  customers -
+  
+    id: int
+    first_name: varchar
+    last_name: varchar
+    city: varchar
+    address: varchar
+    phone_number: varchar
+
+  orders -
+  
+    id: int
+    cust_id: int
+    order_date: datetime
+    order_details: varchar
+    total_order_cost: int
+    
+ ###  Solution - 
+    
+    select customers.id, order_date, first_name, sum(total_order_cost) as tl_cost
+    from customers
+    right join orders on customers.id = orders.cust_id
+    where order_date between '2019-05-01' and '2019-05-01' 
+    group by customer.id, order_date
+    order by tl_cost desc
+    limit 1;  
