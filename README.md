@@ -693,3 +693,56 @@ For simplicity, you can assume that every first name in the dataset is unique.
     group by customer.id, order_date
     order by tl_cost desc
     limit 1;  
+
+### Q.27 Find the Olympics with the highest number of athletes. The Olympics game is a combination of the year and the season, and is found in the 'games' column. Output the Olympics along with the corresponding number of athletes.
+
+   `Company Name -  ESPN`
+  
+  olympics_athletes_events -
+  
+    id: int
+    name: varchar
+    sex: varchar
+    age: float
+    height: float
+    weight: datetime
+    team: varchar
+    noc: varchar
+    games: varchar
+    year: int
+    season: varchar
+    city: varchar
+    sport: varchar
+    event: varchar
+    medal: varchar
+    
+ ###  Solution - 
+    
+    select games, count(distinct id) as athletes
+    from olympics_athletes_events' 
+    group by games
+    order by athletes desc
+    limit 1;  
+
+### Q.28 Find songs that have ranked in the top position. Output the track name and the number of times it ranked at the top. Sort your records by the number of times the song was in the top position in descending order.
+
+   `Company Name -  Spotify`
+  
+  spotify_worldwide_daily_song_ranking -
+  
+    id: int
+    position: int
+    trackname: varchar
+    artist: varchar
+    streams: int
+    url: varchar
+    date: datetime
+    region: varchar
+    
+ ###  Solution - 
+    
+    select trackname, count(position) as times_top1
+    from olympics_athletes_events
+    where position = 1
+    group by trackname
+    order by times_top1 desc;  
