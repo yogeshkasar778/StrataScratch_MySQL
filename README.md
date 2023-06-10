@@ -746,3 +746,30 @@ For simplicity, you can assume that every first name in the dataset is unique.
     where position = 1
     group by trackname
     order by times_top1 desc;  
+
+### Q.29 Find the top 5 businesses with most reviews. Assume that each row has a unique business_id such that the total reviews for each business is listed on each row. Output the business name along with the total number of reviews and order your results by the total reviews in descending order.
+
+   `Company Name -  Yelp`
+  
+  yelp_business -
+  
+    business_id: varchar
+    name: varchar
+    neighborhood: varchar
+    address: varchar
+    city: varchar
+    state: varchar
+    postal_code: varchar
+    latitude: float
+    longitude: float
+    stars: float
+    review_count: int
+    is_open: int
+    categories: varchar
+    
+ ###  Solution - 
+    
+    select name, review_count as total_review
+    from yelp_business
+    order by total_review desc
+    limit 5;  
