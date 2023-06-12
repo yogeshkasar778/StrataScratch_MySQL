@@ -773,3 +773,38 @@ For simplicity, you can assume that every first name in the dataset is unique.
     from yelp_business
     order by total_review desc
     limit 5;  
+
+### Q.30 Find all wineries which produce wines by possessing aromas of plum, cherry, rose, or hazelnut. To make it more simple, look only for singular form of the mentioned aromas. HINT: if one of the specified words is just a substring of another word, this should not be a hit, but a miss.
+
+   `Company Name -  Wine Magazine
+`
+  
+  winemag_p1 -
+  
+    id: int
+    country: varchar
+    description: varchar
+    designation: varchar
+    points: int
+    price: float
+    province: varchar
+    region_1: varchar
+    region_2: varchar
+    variety: varchar
+    winery: varchar
+    
+ ###  Solution - 
+    
+    select distinct winery
+    from winemag_p1
+    where lower(description) regexp '(plum|rose|cherry|hazelnut)([^a-z])'; 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
