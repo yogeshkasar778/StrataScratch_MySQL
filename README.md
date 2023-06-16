@@ -799,9 +799,41 @@ For simplicity, you can assume that every first name in the dataset is unique.
     from winemag_p1
     where lower(description) regexp '(plum|rose|cherry|hazelnut)([^a-z])'; 
     
+### Q.31 Find the top business categories based on the total number of reviews. Output the category along with the total number of reviews. Order by total reviews in descending order.
+
+   `Company Name -  yelp`
+  
+  yelp_business -
+  
+    business_id: varchar
+    name: varchar
+    neighborhood: varchar
+    address: varchar
+    city: varchar
+    state: varchar
+    postal_code: varchar
+    latitude: float
+    longitude: float
+    stars: float
+    review_count: int
+    is_open: int
+    categories: varchar
     
+ ###  Solution - 
     
-    
+    WITH RECURSIVE CTE (n) AS (
+                  SELECT 1
+                  UNION ALL
+                  SELECT n+1 FROM CTE WHERE n<12)
+    SELECT
+       substring_index(substring_index(categories,';',n),';',-1) category,
+       SUM(review_count) total
+    FROM 
+       yelp_business JOIN CTE
+    ON 
+      n <= char_length(categories) - char_length(replace(categories,';','')) + 1
+    GROUP BY 1
+    order by total desc;
     
     
     
