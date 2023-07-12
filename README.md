@@ -432,8 +432,45 @@ airbnb_search_details
     
     select abs(max(a.salary) - max(b.salary)) as sal_diff
     from db_employee a, db_employee b
-    where a.department_id = 4 and b.department_id = 1;       
+    where a.department_id = 4 and b.department_id = 1; 
     
+### Q.18 Write a query that returns the number of unique users per client per month.
+   `Company Name -  Apple, Dell, Microsoft`
+  
+  fact_events -
+  
+    id: int
+    time_id: datetime
+    user_id: varchar
+    customer_id: varchar
+    client_id: varchar
+    event_type: varchar
+    event_id: int
+    
+ ###  Solution - 
+    
+    select client_id, extract(month from time_id) as month,
+    count(distinct user_id) as user_num
+    from fact_events
+    group by client_id, month;    
+
+### Q.19 Write a query that will calculate the number of shipments per month. The unique key for one shipment is a combination of shipment_id and sub_id. Output the year_month in format YYYY-MM and the number of shipments in that month.
+   `Company Name -  Amazon`
+  
+  amazon_shipment -
+  
+    shipment_id: int
+    sub_id: int
+    weight: int
+    shipment_date: datetime
+    
+ ###  Solution - 
+    
+    select to_char(shipment_date, 'YYYY-MM') as year_month,
+    count(concat(shipment_id,sub_id)) as user_num
+    from amazon_shipment
+    group by year_month;    
+        
 ## `Difficulty Level - Medium`
 
    ### Q.18 What were the top 10 ranked songs in 2010? Output the rank, group name, and song name but do not show the same song twice. Sort the result based on the year_rank in ascending order.
