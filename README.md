@@ -470,7 +470,27 @@ airbnb_search_details
     count(concat(shipment_id,sub_id)) as user_num
     from amazon_shipment
     group by year_month;    
-        
+
+### Q.20 Find the number of workers by department who joined in or after April. Output the department name along with the corresponding number of workers. Sort records based on the number of workers in descending order.
+   `Company Name -  Amazon`
+  
+  worker -
+  
+    worker_id: int
+    first_name: varchar
+    last_name: varchar
+    salary: int
+    joining_date: datetime
+    department: varchar
+    
+ ###  Solution - 
+    
+    select department, count(*) as num_worker
+    from worker
+    where date_part('month', joining_date)>=4
+    group by department
+    order by num_worker desc;    
+    
 ## `Difficulty Level - Medium`
 
    ### Q.18 What were the top 10 ranked songs in 2010? Output the rank, group name, and song name but do not show the same song twice. Sort the result based on the year_rank in ascending order.
