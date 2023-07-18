@@ -490,10 +490,29 @@ airbnb_search_details
     where date_part('month', joining_date)>=4
     group by department
     order by num_worker desc;    
+
+### Q.21 Find the number of employees working in the Admin department that joined in April or later.
+
+   `Company Name -  Microsoft, Amazon`
+  
+  worker -
+  
+    worker_id: int
+    first_name: varchar
+    last_name: varchar
+    salary: int
+    joining_date: datetime
+    department: varchar
+    
+ ###  Solution - 
+    
+    select count(*) as n_admin
+    from worker
+    where department = 'Admin' and date_part('month', joining_date)>=4;   
     
 ## `Difficulty Level - Medium`
 
-   ### Q.18 What were the top 10 ranked songs in 2010? Output the rank, group name, and song name but do not show the same song twice. Sort the result based on the year_rank in ascending order.
+   ### Q.22 What were the top 10 ranked songs in 2010? Output the rank, group name, and song name but do not show the same song twice. Sort the result based on the year_rank in ascending order.
  
    `Company Name -  Spotify`
   
@@ -514,36 +533,26 @@ airbnb_search_details
     where year = '2010'
     order by year_rank asc
     limit 10;  
-
- ### Q.19 Classify each business as either a restaurant, cafe, school, or other.
-•	A restaurant should have the word 'restaurant' in the business name.
-•	A cafe should have either 'cafe', 'café', or 'coffee' in the business name.
-•	A school should have the word 'school' in the business name.
-•	All other businesses should be classified as 'other'.
-
-Output the business name and their classification.
+    
+   ### Q.23 You are given a table of product launches by company by year. Write a query to count the net difference between the number of products companies launched in 2020 with the number of products companies launched in the previous year. Output the name of the companies and a net difference of net products released for 2020 compared to the previous year.
  
-   `Company Name -  City of San Francisco`
+   `Company Name -  Saleforce, Tesla`
   
-  sf_restaurant_health_violations -
+  car_launches -
   
-    business_id: int
-    business_name: varchar
-    business_address: varchar
-    business_city: varchar
-    business_state: varchar
-    business_postal_code: float
-    business_latitude: float
-    business_longitude: float
-    business_location: varchar
-    business_phone_number: float
-    inspection_id: varchar
-    inspection_date: datetime
-    inspection_score: float
-    inspection_type: varchar
-    violation_id: varchar
-    violation_description: varchar
-    risk_category: varchar
+    year: int
+    company_name: varchar
+    product_name: varchar
+
+    
+ ###  Solution - 
+    
+    select company_name,
+           sum(case when year=2019 then -1
+           when year=2020 then 1 end) as net_products
+    from car_launches
+    group by company_name
+    order by company_name; ### Q.19 Classify each business as either a restaurant, cafe, school, or other.
 
     
  ###  Solution - 
