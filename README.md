@@ -508,11 +508,51 @@ airbnb_search_details
     
     select count(*) as n_admin
     from worker
-    where department = 'Admin' and date_part('month', joining_date)>=4;   
+    where department = 'Admin' and date_part('month', joining_date)>=4;
+    
+### Q.22 You have been asked to find the 5 most lucrative products in terms of total revenue for the first half of 2022 (from January to June inclusive). Output their IDs and the total revenue.
+
+   `Company Name -  Meta/Facebook`
+  
+  online_orders -
+  
+    product_id: int
+    promotion_id: int
+    cost_in_dollars: int
+    customer_id: int
+    date: datetime
+    units_sold: int
+    
+ ###  Solution - 
+    
+    select product_id, sum(units_sold*cost_in_dollars) as revenue
+    from online_orders
+    where date between '2022-01-01' and '2022-06-30'
+    group by product_id
+    order by revenue
+    limit 5;  
     
 ## `Difficulty Level - Medium`
 
-   ### Q.22 What were the top 10 ranked songs in 2010? Output the rank, group name, and song name but do not show the same song twice. Sort the result based on the year_rank in ascending order.
+### Q.Find the email activity rank for each user. Email activity rank is defined by the total number of emails sent. The user with the highest number of emails sent will have a rank of 1, and so on. Output the user, total emails, and their activity rank. Order records by the total emails in descending order. Sort users with the same number of emails in alphabetical order. In your rankings, return a unique value (i.e., a unique rank) even if multiple users have the same number of emails. For tie breaker use alphabetical order of the user usernames.
+ 
+   `Company Name -  Google`
+  
+  google_gmail_emails -
+  
+    id: int
+    from_user: varchar
+    to_user: varchar
+    day: int
+    
+ ###  Solution - 
+    
+    select from_user, count(to_user) as total_emails,
+    ROW_NUMBER() OVER (order by count(to_user) desc, from_user asc) as row_number
+    from google_gmail_emails 
+    group by from_user; 
+    
+### Q.24 What were the top 10 ranked songs in 2010? Output the rank, group name, and song name but do not show the same song twice. Sort the result based on the year_rank in ascending order.
  
    `Company Name -  Spotify`
   
@@ -534,7 +574,7 @@ airbnb_search_details
     order by year_rank asc
     limit 10;  
     
-   ### Q.23 You are given a table of product launches by company by year. Write a query to count the net difference between the number of products companies launched in 2020 with the number of products companies launched in the previous year. Output the name of the companies and a net difference of net products released for 2020 compared to the previous year.
+### Q.23 You are given a table of product launches by company by year. Write a query to count the net difference between the number of products companies launched in 2020 with the number of products companies launched in the previous year. Output the name of the companies and a net difference of net products released for 2020 compared to the previous year.
  
    `Company Name -  Saleforce, Tesla`
   
