@@ -1,6 +1,6 @@
-# StrataScratch MySQL Question and Answer - 
+# :computer: StrataScratch SQL Question and Answer - 
 
-## `Difficulty Level - Easy`
+##  :dart: `Difficulty Level - Easy`
 
  ### Q.1 Count the number of user events performed by MacBookPro users. Output the result along with the event name. Sort the result based on the event count in the descending order.
    `Company Name - Apple`
@@ -532,9 +532,9 @@ airbnb_search_details
     order by revenue
     limit 5;  
     
-## `Difficulty Level - Medium`
+## :dart: `Difficulty Level - Medium`
 
-### Q.Find the email activity rank for each user. Email activity rank is defined by the total number of emails sent. The user with the highest number of emails sent will have a rank of 1, and so on. Output the user, total emails, and their activity rank. Order records by the total emails in descending order. Sort users with the same number of emails in alphabetical order. In your rankings, return a unique value (i.e., a unique rank) even if multiple users have the same number of emails. For tie breaker use alphabetical order of the user usernames.
+### Q.23 Find the email activity rank for each user. Email activity rank is defined by the total number of emails sent. The user with the highest number of emails sent will have a rank of 1, and so on. Output the user, total emails, and their activity rank. Order records by the total emails in descending order. Sort users with the same number of emails in alphabetical order. In your rankings, return a unique value (i.e., a unique rank) even if multiple users have the same number of emails. For tie breaker use alphabetical order of the user usernames.
  
    `Company Name -  Google`
   
@@ -550,8 +550,76 @@ airbnb_search_details
     select from_user, count(to_user) as total_emails,
     ROW_NUMBER() OVER (order by count(to_user) desc, from_user asc) as row_number
     from google_gmail_emails 
-    group by from_user; 
+    group by from_user;
     
+### Q.24 Identify projects that are at risk for going overbudget. A project is considered to be overbudget if the cost of all employees assigned to the project is greater than the budget of the project. You'll need to prorate the cost of the employees to the duration of the project. For example, if the budget for a project that takes half a year to complete is $10K, then the total half-year salary of all employees assigned to the project should not exceed $10K. Salary is defined on a yearly basis, so be careful how to calculate salaries for the projects that last less or more than one year. Output a list of projects that are overbudget with their project name, project budget, and prorated total employee expense (rounded to the next dollar amount).
+ 
+   `Company Name -  LinkedIn`
+  
+  linkedin_projects -
+  
+    id: int
+    title: varchar
+    budget: int
+    start_date: datetime
+    end_date: datetime
+
+  linkedin_emp_projects -
+  
+    emp_id: int
+    project_id: int
+
+  linkedin_employees - 
+  
+    id: int 
+    first_name: varchar 
+    last_name: varchar 
+    salary: int
+    
+ ###  Solution - 
+    
+    select title, budget, ceiling((end_date - start_date)*(sum(salary)/365)) as 
+           prorated_employee_expense
+    from linkedin_projects as lp
+    join linkedin_emp_projects as lep 
+       on lp.id=lep.project_id
+    join linkedin_employees as le 
+       on lep.emp_id=le.id
+    group by title, budget,end_date, start_date
+    having ceiling((end_date - start_date)*(sum(salary)/365)) > budget; 
+    
+### Q.25 Find the number of Apple product users and the number of total users with a device and group the counts by language. Assume Apple products are only MacBook-Pro, iPhone 5s, and iPad-air. Output the language along with the total number of Apple users and users with any device. Order your results based on the number of total users in descending order.
+ 
+   `Company Name -  Google, Apple`
+  
+  playbook_events -
+  
+    user_id: int
+    occurred_at: datetime
+    event_type: varchar
+    event_name: varchar
+    location: varchar
+    device: varchar
+
+  playbook_users -
+  
+    user_id: int
+    created_at: datetime
+    company_id: int
+    language: varchar
+    activated_at: datetime
+    state: varchar
+    
+ ###  Solution - 
+    
+    select language, count(distinct
+                  case when device in ('macbook pro','iphone 5s','ipad air')
+                  then pe.user_id else null end ) as n_apple_users, count(distinct pe.user_id) as n_total_users
+    from playbook_events as pe
+    left join playbook_users as pu on pe.user_id = pu.user_id
+    group by language
+    order by n_total_users desc;
+        
 ### Q.24 What were the top 10 ranked songs in 2010? Output the rank, group name, and song name but do not show the same song twice. Sort the result based on the year_rank in ascending order.
  
    `Company Name -  Spotify`
