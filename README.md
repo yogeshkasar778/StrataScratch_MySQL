@@ -619,7 +619,59 @@ airbnb_search_details
     left join playbook_users as pu on pe.user_id = pu.user_id
     group by language
     order by n_total_users desc;
-        
+
+### Q.26 Calculate the percentage of spam posts in all viewed posts by day. A post is considered a spam if a string "spam" is inside keywords of the post. Note that the facebook_posts table stores all posts posted by users. The facebook_post_views table is an action table denoting if a user has viewed a post.
+ 
+   `Company Name -  Meta/Facebook`
+  
+  facebook_posts -
+  
+    post_id: int
+    poster: int
+    post_text: varchar
+    post_keywords: varchar
+    post_date: datetime
+
+  facebook_post_views -
+  
+    post_id: int
+    viewer_id: int
+    
+ ###  Solution - 
+    
+    select post_date, (100 * count(distinct fp.post_id) filter(where post_keywords like '%spam%') / count(distinct fp.post_id)) as 
+                spam_share
+    from facebook_posts as fp
+    join facebook_post_views as fpv on fp.post_id = fpv.post_id
+    group by post_date;  
+    
+### Q.27 Find the second highest salary of employees.
+ 
+   `Company Name -  Amazon, Dropbox`
+  
+  employee -
+  
+    id: int
+    first_name: varchar
+    last_name: varchar
+    age: int
+    sex: varchar
+    employee_title: varchar
+    department: varchar
+    salary: int
+    target: int
+    bonus: int
+    email: varchar
+    city: varchar
+    address: varchar
+    manager_id: int
+   
+ ###  Solution - 
+    
+    select max(salary) as salary
+    from employee 
+    where salary < (select max(salary) from employee);  
+    
 ### Q.24 What were the top 10 ranked songs in 2010? Output the rank, group name, and song name but do not show the same song twice. Sort the result based on the year_rank in ascending order.
  
    `Company Name -  Spotify`
