@@ -1,6 +1,9 @@
 # :computer: StrataScratch SQL Question and Answer - 
-
+- [Easy](https://github.com/yogeshkasar778/StrataScratch_SQL_Practice#dart-difficulty-level---easy)
+- [Medium](https://github.com/yogeshkasar778/StrataScratch_SQL_Practice#dart-difficulty-level---medium)
+  
 ##  :dart: `Difficulty Level - Easy`
+  
 
  ### Q.1 Count the number of user events performed by MacBookPro users. Output the result along with the event name. Sort the result based on the event count in the descending order.
    `Company Name - Apple`
