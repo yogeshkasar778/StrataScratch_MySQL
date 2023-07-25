@@ -674,8 +674,62 @@ airbnb_search_details
     select max(salary) as salary
     from employee 
     where salary < (select max(salary) from employee);  
+### Q.28 Find the percentage of shipable orders. Consider an order is shipable if the customer's address is known.
+ 
+   `Company Name -  Google, Amazon`
+  
+  orders -
+  
+    id: int
+    cust_id: int
+    order_date: datetime
+    order_details: varchar
+    total_order_cost: int
     
-### Q.24 What were the top 10 ranked songs in 2010? Output the rank, group name, and song name but do not show the same song twice. Sort the result based on the year_rank in ascending order.
+  customers -
+  
+    id: int
+    first_name: varchar
+    last_name: varchar
+    city: varchar
+    address: varchar
+    phone_number: varchar
+    
+ ###  Solution - 
+    
+    select count(address)*100.00/count(*)
+    from orders as o 
+    left join customers as c on o.cust_id = c.id;  
+    
+### Q.29 Make a report showing the number of survivors and non-survivors by passenger class. Classes are categorized based on the pclass value as: pclass = 1: first_class, pclass = 2: second_classs, pclass = 3: third_class. Output the number of survivors and non-survivors by each class.
+ 
+   `Company Name -  Google, Tesla`
+  
+  titanic -
+  
+    passengerid: int
+    survived: int
+    pclass: int
+    name: varchar
+    sex: varchar
+    age: float
+    sibsp: int
+    parch: int
+    ticket: varchar
+    fare: float
+    cabin: varchar
+    embarked: varchar
+    
+ ###  Solution - 
+    
+    select survived, 
+           sum(case when pclass = 1 then 1 else 0 end) as first_class,
+           sum(case when pclass = 2 then 1 else 0 end) as second_class,
+           sum(case when pclass = 2 then 1 else 0 end) as third_class
+    from titanic 
+    group by survived;  
+            
+### Q.30 What were the top 10 ranked songs in 2010? Output the rank, group name, and song name but do not show the same song twice. Sort the result based on the year_rank in ascending order.
  
    `Company Name -  Spotify`
   
@@ -695,8 +749,23 @@ airbnb_search_details
     from billboard_top_100_year_end 
     where year = '2010'
     order by year_rank asc
-    limit 10;  
+    limit 10;
     
+### Q.31 Find the number of times each word appears in drafts. Output the word along with the corresponding number of occurrences.
+
+   `Company Name -  Google`
+  
+  google_file_store -
+  
+    filename: varchar
+    contents: varchar
+    
+ ###  Solution - 
+    
+    select word, nentry
+    from ts_stat('select to_tsvector(contents) FROM google_file_store where filename ILIKE ''draft%''')
+    order by nentry desc;
+        
 ### Q.23 You are given a table of product launches by company by year. Write a query to count the net difference between the number of products companies launched in 2020 with the number of products companies launched in the previous year. Output the name of the companies and a net difference of net products released for 2020 compared to the previous year.
  
    `Company Name -  Saleforce, Tesla`
