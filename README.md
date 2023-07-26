@@ -765,7 +765,67 @@ airbnb_search_details
     select word, nentry
     from ts_stat('select to_tsvector(contents) FROM google_file_store where filename ILIKE ''draft%''')
     order by nentry desc;
-        
+    
+### Q.32 Classify each business as either a restaurant, cafe, school, or other. •	A restaurant should have the word 'restaurant' in the business name. •	A cafe should have either 'cafe', 'café', or 'coffee' in the business name. •	A school should have the word 'school' in the business name. •	All other businesses should be classified as 'other'. Output the business name and their classification.
+
+   `Company Name -  City of San Francisco`
+  
+  sf_restaurant_health_violations -
+  
+    business_id: int
+    business_name: varchar
+    business_address: varchar
+    business_city: varchar
+    business_state: varchar
+    business_postal_code: float
+    business_latitude: float
+    business_longitude: float
+    business_location: varchar
+    business_phone_number: float
+    inspection_id: varchar
+    inspection_date: datetime
+    inspection_score: float
+    inspection_type: varchar
+    violation_id: varchar
+    violation_description: varchar
+    risk_category: varchar
+
+ ###  Solution - 
+    
+    select distinct business_name,
+                case
+                when business_name ~* 'restaurant' then  'restaurant' 
+                when business_name ~* 'cafe|café|coffee' then  'cafe' 
+                when business_name ~* 'school' then 'school'
+                else 'other' end as classification
+     from sf_restaurant_health_violations
+     
+### Q.33 Output ids of students with a median score from the writing SAT.
+
+   `Company Name -  Google, Kaplan, General Assembly
+ `
+  sat_scores -
+  
+    school: varchar
+    teacher: varchar
+    student_id: float
+    sat_writing: float
+    sat_verbal: float
+    sat_math: float
+    hrs_studied: float
+    id: int
+    average_sat: float
+    love: datetime
+
+ ###  Solution - 
+    
+    select student_id
+    from sat_scores
+    where sat_writing = (
+                     select PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY sat_writing)
+                     from sat_scores
+                     )
+                     
 ### Q.23 You are given a table of product launches by company by year. Write a query to count the net difference between the number of products companies launched in 2020 with the number of products companies launched in the previous year. Output the name of the companies and a net difference of net products released for 2020 compared to the previous year.
  
    `Company Name -  Saleforce, Tesla`
