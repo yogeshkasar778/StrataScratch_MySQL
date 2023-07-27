@@ -826,6 +826,53 @@ airbnb_search_details
                      from sat_scores
                      )
                      
+### Q.34 Which user flagged the most distinct videos that ended up approved by YouTube? Output, in one column, their full name or names in case of a tie. In the user's full name, include a space between the first and the last name.
+
+   `Company Name -  Google`
+   
+  user_flags -
+  
+    user_firstname: varchar
+    user_lastname: varchar
+    video_id: varchar
+    flag_id: varchar
+    
+  flag_review -
+  
+    flag_id: varchar
+    reviewed_by_yt: bool
+    reviewed_date: datetime
+    reviewed_outcome: varchar
+    
+ ###  Solution - 
+    select fullname
+    from (select concat(user_firstname,' ',user_lastname) as fullname, 
+            rank() over (order by count(distinct video_id) desc) as rnk
+         from user_flags as u
+         join flag_review as f on u.flag_id = f.flag_id
+         where reviewed_outcome = 'APPROVED'
+         group by fullname)
+     where rnk = 1;  
+     
+### Q.35 For each video, find how many unique users flagged it. A unique user can be identified using the combination of their first name and last name. Do not consider rows in which there is no flag ID.
+
+   `Company Name -  Google, Netflix`
+   
+  user_flags -
+  
+    user_firstname: varchar
+    user_lastname: varchar
+    video_id: varchar
+    flag_id: varchar
+    
+ ###  Solution - 
+    
+    select video_id, 
+           count(distinct concat(user_firstname,' ',user_lastname)) as num_unique_users
+    from user_flags
+    where flag_id is not null
+    group by video_id;
+    
 ### Q.23 You are given a table of product launches by company by year. Write a query to count the net difference between the number of products companies launched in 2020 with the number of products companies launched in the previous year. Output the name of the companies and a net difference of net products released for 2020 compared to the previous year.
  
    `Company Name -  Saleforce, Tesla`
