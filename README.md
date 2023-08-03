@@ -873,6 +873,24 @@ airbnb_search_details
     where flag_id is not null
     group by video_id;
     
+### Q.36 Output share of US users that are active. Active users are the ones with an "open" status in the table.
+
+   `Company Name -  Meta/Facebook`
+   
+  fb_active_users -
+  
+    user_id: int
+    name: varchar
+    status: varchar
+    country: varchar
+    
+ ###  Solution - 
+    
+    select 1.00*count(case when status = 'open' then 1 else null end)/count(user_id) as 
+                active_users_shares
+    from fb_active_users
+    where country = 'USA';  
+    
 ### Q.23 You are given a table of product launches by company by year. Write a query to count the net difference between the number of products companies launched in 2020 with the number of products companies launched in the previous year. Output the name of the companies and a net difference of net products released for 2020 compared to the previous year.
  
    `Company Name -  Saleforce, Tesla`
