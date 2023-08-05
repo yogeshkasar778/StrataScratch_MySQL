@@ -891,6 +891,30 @@ airbnb_search_details
     from fb_active_users
     where country = 'USA';  
     
+### Q.37 You are given a dataset that provides the number of active users per day per premium account. A premium account will have an entry for every day that it’s premium. However, a premium account may be temporarily discounted and considered not paid, this is indicated by a value of 0 in the final_price column for a certain day. Find out how many premium accounts that are paid on any given day are still premium and paid 7 days later. Output the date, the number of premium and paid accounts on that day, and the number of how many of these accounts are still premium and paid 7 days later. Since you are only given data for a 14 days period, only include the first 7 available dates in your output.
+
+   `Company Name -  Meta/Facebook, Asana`
+   
+  premium_accounts_by_day -
+  
+    account_id: varchar
+    entry_date: datetime
+    users_visited_7d: int
+    final_price: int
+    plan_size: int
+    
+ ###  Solution - 
+    
+    select pre1.entry_date, count(pre1.account_id) premium_paid_accounts, 
+           count(pre2.account_id) premium_paid_accounts_after_7days
+    from premium_accounts_by_day pre1
+    left join premium_accounts_by_day pre2 on pre1.account_id = pre2.account_id
+    and pre2.final_price > 0 and datediff(pre2.entry_date, pre1.entry_date) =7
+    where pre1.final_price > 0
+    group by pre1.entry_date
+    order by pre1.entry_date
+    limit 7;      
+    
 ### Q.23 You are given a table of product launches by company by year. Write a query to count the net difference between the number of products companies launched in 2020 with the number of products companies launched in the previous year. Output the name of the companies and a net difference of net products released for 2020 compared to the previous year.
  
    `Company Name -  Saleforce, Tesla`
