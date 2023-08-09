@@ -915,7 +915,7 @@ airbnb_search_details
     order by pre1.entry_date
     limit 7;      
     
-### Q.23 You are given a table of product launches by company by year. Write a query to count the net difference between the number of products companies launched in 2020 with the number of products companies launched in the previous year. Output the name of the companies and a net difference of net products released for 2020 compared to the previous year.
+### Q.38 You are given a table of product launches by company by year. Write a query to count the net difference between the number of products companies launched in 2020 with the number of products companies launched in the previous year. Output the name of the companies and a net difference of net products released for 2020 compared to the previous year.
  
    `Company Name -  Saleforce, Tesla`
   
@@ -950,7 +950,7 @@ airbnb_search_details
     from sf_restaurant_health_violations
     group by binary business_name;  
     
-### Q.20 You're given a dataset of health inspections. Count the number of violation in an inspection in 'Roxanne Cafe' for each year. If an inspection resulted in a violation, there will be a value in the 'violation_id' column. Output the number of violations by year in ascending order.
+### Q.39 You're given a dataset of health inspections. Count the number of violation in an inspection in 'Roxanne Cafe' for each year. If an inspection resulted in a violation, there will be a value in the 'violation_id' column. Output the number of violations by year in ascending order.
  
    `Company Name -  City of San Francisco`
   
@@ -982,7 +982,7 @@ airbnb_search_details
     group by year
     order by n_inspections asc;   
     
-### Q.21 Find the rate of processed tickets for each type.
+### Q.40 Find the rate of processed tickets for each type.
  
    `Company Name -  Meta/Facebook`
   
@@ -998,7 +998,7 @@ airbnb_search_details
     from facebook_complaints
     group by type;    
 
-### Q.22 Calculate the total revenue from each customer in March 2019. Include only customers who were active in March 2019.
+### Q.41 Calculate the total revenue from each customer in March 2019. Include only customers who were active in March 2019.
 
 
 Output the revenue along with the customer id and sort the results based on the revenue in descending order.
@@ -1021,7 +1021,7 @@ Output the revenue along with the customer id and sort the results based on the 
     group by cust_id
     order by revenue desc;    
 
-### Q.23 Find employees who are earning more than their managers. Output the employee's first name along with the corresponding salary.
+### Q.42 Find employees who are earning more than their managers. Output the employee's first name along with the corresponding salary.
 
    `Company Name -  Walmart, Best Buy, Dropbox`
   
@@ -1049,7 +1049,7 @@ Output the revenue along with the customer id and sort the results based on the 
     join employee em on e.manager_id = em.id
     where e.salary > em.salary;  
 
-### Q.24 Find the employee with the highest salary per department. Output the department name, employee's first name along with the corresponding salary.
+### Q.43 Find the employee with the highest salary per department. Output the department name, employee's first name along with the corresponding salary.
 
    `Company Name -  Twitter, Asana`
   
@@ -1076,7 +1076,7 @@ Output the revenue along with the customer id and sort the results based on the 
     from employee
     where salary in (select max(salary) from employee group by department);  
 
-### Q.25 Find the highest target achieved by the employee or employees who works under the manager id 13. Output the first name of the employee and target achieved. The solution should show the highest target achieved under manager_id=13 and which employee(s) achieved it.
+### Q.44 Find the highest target achieved by the employee or employees who works under the manager id 13. Output the first name of the employee and target achieved. The solution should show the highest target achieved under manager_id=13 and which employee(s) achieved it.
 
    `Company Name -  Saleforce`
   
@@ -1108,7 +1108,7 @@ Output the revenue along with the customer id and sort the results based on the 
     from target_achived
     where rnk = 1;  
 
-### Q.26 Find the customer with the highest daily total order cost between 2019-02-01 to 2019-05-01. If customer had more than one order on a certain day, sum the order costs on daily basis. Output customer's first name, total cost of their items, and the date.
+### Q.45 Find the customer with the highest daily total order cost between 2019-02-01 to 2019-05-01. If customer had more than one order on a certain day, sum the order costs on daily basis. Output customer's first name, total cost of their items, and the date.
 
 For simplicity, you can assume that every first name in the dataset is unique.
 
@@ -1141,7 +1141,7 @@ For simplicity, you can assume that every first name in the dataset is unique.
     order by tl_cost desc
     limit 1;  
 
-### Q.27 Find the Olympics with the highest number of athletes. The Olympics game is a combination of the year and the season, and is found in the 'games' column. Output the Olympics along with the corresponding number of athletes.
+### Q.46 Find the Olympics with the highest number of athletes. The Olympics game is a combination of the year and the season, and is found in the 'games' column. Output the Olympics along with the corresponding number of athletes.
 
    `Company Name -  ESPN`
   
@@ -1171,7 +1171,7 @@ For simplicity, you can assume that every first name in the dataset is unique.
     order by athletes desc
     limit 1;  
 
-### Q.28 Find songs that have ranked in the top position. Output the track name and the number of times it ranked at the top. Sort your records by the number of times the song was in the top position in descending order.
+### Q.47 Find songs that have ranked in the top position. Output the track name and the number of times it ranked at the top. Sort your records by the number of times the song was in the top position in descending order.
 
    `Company Name -  Spotify`
   
@@ -1194,7 +1194,7 @@ For simplicity, you can assume that every first name in the dataset is unique.
     group by trackname
     order by times_top1 desc;  
 
-### Q.29 Find the top 5 businesses with most reviews. Assume that each row has a unique business_id such that the total reviews for each business is listed on each row. Output the business name along with the total number of reviews and order your results by the total reviews in descending order.
+### Q.48 Find the top 5 businesses with most reviews. Assume that each row has a unique business_id such that the total reviews for each business is listed on each row. Output the business name along with the total number of reviews and order your results by the total reviews in descending order.
 
    `Company Name -  Yelp`
   
@@ -1221,7 +1221,7 @@ For simplicity, you can assume that every first name in the dataset is unique.
     order by total_review desc
     limit 5;  
 
-### Q.30 Find all wineries which produce wines by possessing aromas of plum, cherry, rose, or hazelnut. To make it more simple, look only for singular form of the mentioned aromas. HINT: if one of the specified words is just a substring of another word, this should not be a hit, but a miss.
+### Q.49 Find all wineries which produce wines by possessing aromas of plum, cherry, rose, or hazelnut. To make it more simple, look only for singular form of the mentioned aromas. HINT: if one of the specified words is just a substring of another word, this should not be a hit, but a miss.
 
    `Company Name -  Wine Magazine
 `
@@ -1246,7 +1246,7 @@ For simplicity, you can assume that every first name in the dataset is unique.
     from winemag_p1
     where lower(description) regexp '(plum|rose|cherry|hazelnut)([^a-z])'; 
     
-### Q.31 Find the top business categories based on the total number of reviews. Output the category along with the total number of reviews. Order by total reviews in descending order.
+### Q.50 Find the top business categories based on the total number of reviews. Output the category along with the total number of reviews. Order by total reviews in descending order.
 
    `Company Name -  yelp`
   
@@ -1282,7 +1282,30 @@ For simplicity, you can assume that every first name in the dataset is unique.
     GROUP BY 1
     order by total desc;
     
+## :dart: `Difficulty Level - Hard`
+
+### Q.51 Given a table of purchases by date, calculate the month-over-month percentage change in revenue. The output should include the year-month date (YYYY-MM) and percentage change, rounded to the 2nd decimal point, and sorted from the beginning of the year to the end of the year. The percentage change column will be populated from the 2nd month forward and can be calculated as ((this month's revenue - last month's revenue) / last month's revenue)*100.
+
+   `Company Name -  Amazon`
+  
+  sf_transactions -
+  
+    id: int
+    created_at: datetime
+    value: int
+    purchase_id: int
     
+ ###  Solution - 
+    
+    WITH  CTE AS (
+                  SELECT to_char(created_at, 'YYYY-MM') as date_month, sum(value) as revenue,
+                  LAG(sum(value), 1) over(order by to_char(created_at, 'YYYY-MM')) as prev_revenue 
+    GROUP BY to_char(created_at, 'YYYY-MM')
+    order by total desc)
+    
+    select  date_month,
+        round((revenue - prev_revenue) / prev_revenue * 100, 2) as revenue_diff_pct
+    from cte;
     
     
     
