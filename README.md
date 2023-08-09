@@ -1,6 +1,7 @@
 # :computer: StrataScratch SQL Question and Answer - 
 - [Easy](https://github.com/yogeshkasar778/StrataScratch_SQL_Practice#dart-difficulty-level---easy)
 - [Medium](https://github.com/yogeshkasar778/StrataScratch_SQL_Practice#dart-difficulty-level---medium)
+- [Hard](https://github.com/yogeshkasar778/StrataScratch_SQL_Practice#dart-difficulty-level---hard)
   
 ##  :dart: `Difficulty Level - Easy`
   
