@@ -1308,6 +1308,24 @@ For simplicity, you can assume that every first name in the dataset is unique.
         round((revenue - prev_revenue) / prev_revenue * 100, 2) as revenue_diff_pct
     from cte;
     
+### Q.52 ABC Corp is a mid-sized insurer in the US and in the recent past their fraudulent claims have increased significantly for their personal auto insurance portfolio. They have developed a ML based predictive model to identify propensity of fraudulent claims. Now, they assign highly experienced claim adjusters for top 5 percentile of claims identified by the model. Your objective is to identify the top 5 percentile of claims from each state. Your output should be policy number, state, claim cost, and fraud score.
+
+   `Company Name -  Google, Netflix`
+  
+  fraud_score -
+  
+    policy_num: varchar
+    state: varchar
+    claim_cost: int
+    fraud_score: float
     
+ ###  Solution - 
+    
+    SELECT policy number, state, claim_cost, fraud_score
+    from (select *, NTILE(100) OVER (partition by state order by fraud_score desc) as
+                   percentile 
+                   from fraud_score) result
+    where percentile <=5;
+        
     
     
