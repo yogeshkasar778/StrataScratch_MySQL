@@ -1327,5 +1327,57 @@ For simplicity, you can assume that every first name in the dataset is unique.
                    from fraud_score) result
     where percentile <=5;
         
+### Q.53 Find the total number of downloads for paying and non-paying users by date. Include only records where non-paying customers have more downloads than paying customers. The output should be sorted by earliest date first and contain 3 columns date, non-paying downloads, paying downloads.
+
+   `Company Name -  Microsoft`
+  
+  ms_user_dimension -
+  
+    user_id: int
+    acc_id: int
     
+  ms_acc_dimension -
+  
+    acc_id: int
+    paying_customer: varchar
+    
+  ms_download_facts -
+  
+    date: datetime
+    user_id: int
+    downloads: int
+    
+ ###  Solution - 
+    
+    select date, sum(case when mad.paying_customer='no' then downloads end) as non_paying,
+             sum(case when mad.paying_customer='yes' then downloads end) as paying
+    from ms_user_dimension as mud
+    left join ms_acc_dimension as mad 
+              on mud.acc_id=mad.acc_id
+    left join ms_download_facts as mdf 
+              on mud.user_id=mdf.user_id
+    group by date
+    having sum(case when mad.paying_customer='no' then downloads end) > 
+          sum(case when mad.paying_customer='yes' then downloads end)
+    order by date asc;   
+    
+### Q.53 Find the popularity percentage for each user on Meta/Facebook. The popularity percentage is defined as the total number of friends the user has divided by the total number of users on the platform, then converted into a percentage by multiplying by 100. Output each user along with their popularity percentage. Order records in ascending order by user id. The 'user1' and 'user2' column are pairs of friends.
+
+   `Company Name -  Meta/Facebook`
+  
+  facebook_friends -
+  
+    user1: int
+    user2: int
+
+ ###  Solution - 
+    
+    select user1, (count(user2)/count(1) over() :: decimal *100) as popularity_percentage
+    from (select user1, user2 
+          from facebook_friends
+          union all
+          select user2, user1
+          from facebook_friends) as a
+    group by user1
+    order by user1;;   
     
