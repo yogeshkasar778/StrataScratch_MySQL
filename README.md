@@ -1361,7 +1361,7 @@ For simplicity, you can assume that every first name in the dataset is unique.
           sum(case when mad.paying_customer='yes' then downloads end)
     order by date asc;   
     
-### Q.53 Find the popularity percentage for each user on Meta/Facebook. The popularity percentage is defined as the total number of friends the user has divided by the total number of users on the platform, then converted into a percentage by multiplying by 100. Output each user along with their popularity percentage. Order records in ascending order by user id. The 'user1' and 'user2' column are pairs of friends.
+### Q.54 Find the popularity percentage for each user on Meta/Facebook. The popularity percentage is defined as the total number of friends the user has divided by the total number of users on the platform, then converted into a percentage by multiplying by 100. Output each user along with their popularity percentage. Order records in ascending order by user id. The 'user1' and 'user2' column are pairs of friends.
 
    `Company Name -  Meta/Facebook`
   
@@ -1379,5 +1379,33 @@ For simplicity, you can assume that every first name in the dataset is unique.
           select user2, user1
           from facebook_friends) as a
     group by user1
-    order by user1;;   
+    order by user1;   
     
+### Q.55 Find the top 5 states with the most 5 star businesses. Output the state name along with the number of 5-star businesses and order records by the number of 5-star businesses in descending order. In case there are ties in the number of businesses, return all the unique states. If two states have the same result, sort them in alphabetical order.
+
+   `Company Name -  Yelp`
+  
+  yelp_business -
+  
+    business_id: varchar
+    name: varchar
+    neighborhood: varchar
+    address: varchar
+    city: varchar
+    state: varchar
+    postal_code: varchar
+    latitude: float
+    longitude: float
+    stars: float
+    review_count: int
+    is_open: int
+    categories: varchar
+
+ ###  Solution - 
+    
+    select distinct state, count(stars) as n_business
+    from yelp_business
+    where stars =5
+    group by state
+    order by 2 desc, 1
+    limit 6;  
