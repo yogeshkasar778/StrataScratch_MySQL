@@ -1409,3 +1409,18 @@ For simplicity, you can assume that every first name in the dataset is unique.
     group by state
     order by 2 desc, 1
     limit 6;  
+
+### Q.56 Find the number of times the words 'bull' and 'bear' occur in the contents. We're counting the number of times the words occur so words like 'bullish' should not be included in our count. Output the word 'bull' and 'bear' along with the corresponding number of occurrences.
+
+   `Company Name -  Google`
+  
+  google_file_store -
+  
+    filename: varchar
+    contents: varchar
+    
+ ###  Solution - 
+    
+    select word, nentry
+    from to_stat('select to_tsvector(contents) from google_file_store')
+    where ilike 'bull' or word ilike 'bear';  
