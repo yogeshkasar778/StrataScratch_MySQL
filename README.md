@@ -1424,3 +1424,33 @@ For simplicity, you can assume that every first name in the dataset is unique.
     select word, nentry
     from to_stat('select to_tsvector(contents) from google_file_store')
     where ilike 'bull' or word ilike 'bear';  
+
+### Q.57 Select the most popular client_id based on a count of the number of users who have at least 50% of their events from the following list: 'video call received', 'video call sent', 'voice call received', 'voice call sent'.
+
+   `Company Name -  Microsoft, Apple`
+  
+  fact_events -
+  
+    id: int
+    time_id: datetime
+    user_id: varchar
+    customer_id: varchar
+    client_id: varchar
+    event_type: varchar
+    event_id: int
+    
+ ###  Solution - 
+    
+    with cte as (select user_id, client_id
+    from fact_events
+    group by user_id, client_id
+    having avg(case when event_type in ('video call received', 
+                                    'video call sent', 
+                                    'voice call received', 
+                                    'voice call sent')
+                                    then 1 else 0 end ) >=0.5)
+    select client_id
+    from cte
+    group by client_id
+    order by count(user_id) desc
+    limit 1;  
