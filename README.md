@@ -432,11 +432,24 @@ airbnb_search_details
     id: int
     department: varchar
     
- ###  Solution - 
+ ###  Solution 1 - (MySql)
     
-    select abs(max(a.salary) - max(b.salary)) as sal_diff
-    from db_employee a, db_employee b
-    where a.department_id = 4 and b.department_id = 1; 
+    select abs(max(e.salary) - max(d.salary)) as sal_diff
+    from db_employee e, db_dept d
+    where e.department_id = 4 and d.department_id = 1;
+
+###  Solution 2 - (MS SQL Server)
+     with cte as 
+             (select 
+                   department, 
+                    max(salary) as max_salary
+              from db_employee as e
+              join db_dept as d on e.department_id=d.id
+              where department in ('marketing','engineering'
+              group by department
+              )
+          select abs(max(case when department = 'marketing' then max_salary end) - max(case when department = 'engineering' then max_salary end)) salary_differnce
+          from cte
     
 ### Q.18 Write a query that returns the number of unique users per client per month.
    `Company Name -  Apple, Dell, Microsoft`
