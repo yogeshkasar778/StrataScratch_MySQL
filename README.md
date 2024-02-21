@@ -1296,7 +1296,7 @@ For simplicity, you can assume that every first name in the dataset is unique.
     value: int
     purchase_id: int
     
- ###  Solution - 
+ ###  Solution 1 - 
     
     WITH  CTE AS (
                   SELECT to_char(created_at, 'YYYY-MM') as date_month, sum(value) as revenue,
@@ -1307,7 +1307,32 @@ For simplicity, you can assume that every first name in the dataset is unique.
     select  date_month,
         round((revenue - prev_revenue) / prev_revenue * 100, 2) as revenue_diff_pct
     from cte;
-    
+
+  ###  Solution 2 - 
+        WITH cte AS (
+               SELECT 
+              CONCAT(YEAR(created_at), '-', RIGHT('00' + CONVERT(VARCHAR(2), MONTH(created_at)), 2)) AS YearMonth,
+              value
+              FROM sf_transactions
+              ),
+      cte1 AS (
+           SELECT 
+               YearMonth, 
+                 SUM(value) AS current_month_revenue 
+           FROM cte
+          GROUP BY YearMonth
+          ),
+    cte2 AS (
+            SELECT *, 
+                  LAG(current_month_revenue) OVER (ORDER BY YearMonth) AS previous_month_revenue
+        FROM cte1
+       )
+    SELECT 
+        YearMonth, 
+        ROUND(((current_month_revenue - previous_month_revenue) * 100.0 / NULLIF(previous_month_revenue, 0)), 2) AS percentage_change
+FROM cte2;
+
+      
 ### Q.52 ABC Corp is a mid-sized insurer in the US and in the recent past their fraudulent claims have increased significantly for their personal auto insurance portfolio. They have developed a ML based predictive model to identify propensity of fraudulent claims. Now, they assign highly experienced claim adjusters for top 5 percentile of claims identified by the model. Your objective is to identify the top 5 percentile of claims from each state. Your output should be policy number, state, claim cost, and fraud score.
 
    `Company Name -  Google, Netflix`
