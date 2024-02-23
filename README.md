@@ -1012,10 +1012,7 @@ airbnb_search_details
     from facebook_complaints
     group by type;    
 
-### Q.41 Calculate the total revenue from each customer in March 2019. Include only customers who were active in March 2019.
-
-
-Output the revenue along with the customer id and sort the results based on the revenue in descending order.
+### Q.41 Calculate the total revenue from each customer in March 2019. Include only customers who were active in March 2019. Output the revenue along with the customer id and sort the results based on the revenue in descending order.
  
    `Company Name -  Amazon, Meta/Facebook`
   
@@ -1295,7 +1292,35 @@ For simplicity, you can assume that every first name in the dataset is unique.
       n <= char_length(categories) - char_length(replace(categories,';','')) + 1
     GROUP BY 1
     order by total desc;
+
+### Q.51 Write a query that'll identify returning active users. A returning active user is a user that has made a second purchase within 7 days of any other of their purchases. Output a list of user_ids of these returning active users.
+
+Table: amazon_transactions
+
+`Company Name -  Amazon`
+  
+  yelp_business -
+  
+    id: int
+    user_id: int
+    item: varchar
+    created_at: datetime
+    revenue: int
     
+ ###  Solution 1- 
+    
+    select distinct a1.user_id
+    from amazon_transactions as a1
+    join amazon_transactions as a2 on a1.user_id=a2.user_id and a1.id<>a2.id and datediff(day, a1.created_at, a2.created_at) between 0 and 7 
+    order by a1.user_id;
+   
+ ###  Solution 2- 
+   select distinct a1.user_id
+   from amazon_transactions as a1
+   join amazon_transactions as a2 on a1.user_id=a2.user_id and a1.id<>a2.id
+   where datediff(day, a1.created_at, a2.created_at) between 0 and 7 
+   order by a1.user_id  
+   
 ## :dart: `Difficulty Level - Hard`
 
 ### Q.51 Given a table of purchases by date, calculate the month-over-month percentage change in revenue. The output should include the year-month date (YYYY-MM) and percentage change, rounded to the 2nd decimal point, and sorted from the beginning of the year to the end of the year. The percentage change column will be populated from the 2nd month forward and can be calculated as ((this month's revenue - last month's revenue) / last month's revenue)*100.
