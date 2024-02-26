@@ -1279,19 +1279,19 @@ For simplicity, you can assume that every first name in the dataset is unique.
     
  ###  Solution - 
     
-    WITH RECURSIVE CTE (n) AS (
+     WITH RECURSIVE CTE (n) AS (
                   SELECT 1
                   UNION ALL
                   SELECT n+1 FROM CTE WHERE n<12)
-    SELECT
+     SELECT
        substring_index(substring_index(categories,';',n),';',-1) category,
        SUM(review_count) total
-    FROM 
+     FROM 
        yelp_business JOIN CTE
-    ON 
+     ON 
       n <= char_length(categories) - char_length(replace(categories,';','')) + 1
-    GROUP BY 1
-    order by total desc;
+     GROUP BY 1
+     order by total desc;
 
 ### Q.51 Write a query that'll identify returning active users. A returning active user is a user that has made a second purchase within 7 days of any other of their purchases. Output a list of user_ids of these returning active users.
 
@@ -1320,7 +1320,89 @@ Table: amazon_transactions
    join amazon_transactions as a2 on a1.user_id=a2.user_id and a1.id<>a2.id
    where datediff(day, a1.created_at, a2.created_at) between 0 and 7 
    order by a1.user_id  
-   
+
+### Q.52 Find the 3 most profitable companies in the entire world. Output the result along with the corresponding company name. Sort the result based on profits in descending order.
+
+Table: forbes_global_2010_2014
+
+`Company Name -  Forbes`
+  
+  forbes_global_2010_2014 -
+  
+    company: varchar
+    sector: varchar
+    industry: varchar
+    continent: varchar
+    country: varchar
+    marketvalue: float
+    sales: float
+    profits: float
+    assets: float
+    rank: int
+    forbeswebpage: varchar
+    
+ ###  Solution - 
+    
+    select top(3) company, max(profits) as profits
+    from forbes_global_2010_2014
+    group by comppany
+    order by profits desc;
+
+### Q.53 You have been asked to find the job titles of the highest-paid employees. Your output should include the highest-paid title or multiple titles with the same salary.
+
+Table: worker, title
+
+`Company Name -  Amazon, DoorDash`
+  
+  worker -
+  
+    worker_id: int
+    first_name: varchar
+    last_name: varchar
+    salary: int
+    joining_date: datetime
+    department: varchar
+
+  title -
+  
+    worker_ref_id: int
+    worker_title: varchar
+    affected_from: datetime
+
+ ###  Solution - 
+    
+    select t.worker_title 
+    from worker as w
+    join title as t on w.worker_id=t.worker_ref_id
+    where salary in (select max(salary) from worker)
+    
+### Q.54 Calculate each user's average session time. A session is defined as the time difference between a page_load and page_exit. For simplicity, assume a user has only 1 session per day and if there are multiple of the same events on that day, consider only the latest page_load and earliest page_exit, with an obvious restriction that load time event should happen before exit time event . Output the user_id and their average session time.
+
+Table: facebook_web_log
+
+`Company Name -  Meta`
+  
+  facebook_web_log -
+  
+    user_id: int
+    timestamp: datetime
+    action: varchar
+    
+ ###  Solution - 
+    
+    with cte as
+    (select user_id,
+    datediff(second,max(case when action='page_load' then timestamp end),
+    min(case when action='page_exit' then timestamp end)) as session_time
+    from facebook_web_log
+    group by user_id, cast(timestamp as date))
+
+   select user_id, round(sum(session_time)*1.0/count(session_time),1) as session_time
+   from cte
+   where session_time is not  null
+   group by user_id
+
+    
 ## :dart: `Difficulty Level - Hard`
 
 ### Q.51 Given a table of purchases by date, calculate the month-over-month percentage change in revenue. The output should include the year-month date (YYYY-MM) and percentage change, rounded to the 2nd decimal point, and sorted from the beginning of the year to the end of the year. The percentage change column will be populated from the 2nd month forward and can be calculated as ((this month's revenue - last month's revenue) / last month's revenue)*100.
