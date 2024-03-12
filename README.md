@@ -858,7 +858,7 @@ airbnb_search_details
     reviewed_date: datetime
     reviewed_outcome: varchar
     
- ###  Solution - 
+ ###  Solution 1 (PostgreSQL) - 
     select fullname
     from (select concat(user_firstname,' ',user_lastname) as fullname, 
             rank() over (order by count(distinct video_id) desc) as rnk
@@ -867,7 +867,7 @@ airbnb_search_details
          where reviewed_outcome = 'APPROVED'
          group by fullname)
      where rnk = 1;  
-     
+
 ### Q.35 For each video, find how many unique users flagged it. A unique user can be identified using the combination of their first name and last name. Do not consider rows in which there is no flag ID.
 
    `Company Name -  Google, Netflix`
