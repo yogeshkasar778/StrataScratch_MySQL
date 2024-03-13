@@ -1369,12 +1369,25 @@ Table: worker, title
     worker_title: varchar
     affected_from: datetime
 
- ###  Solution - 
+ ###  Solution 1 - 
     
     select t.worker_title 
     from worker as w
     join title as t on w.worker_id=t.worker_ref_id
     where salary in (select max(salary) from worker)
+
+ ###  Solution 2 - 
+    
+    with cte as 
+           (select 1.worker_id, t1.salary, t2.worker_tittle
+           from worker as t1
+           join title as t2 on t1.worker_id=t2.worker_ref_id)
+    with ct1 as (
+           select *, dense_rank()over(order by salary desc) as rnk 
+           from cte
+    select  
+    from cte1
+    where rnk =1
     
 ### Q.54 Calculate each user's average session time. A session is defined as the time difference between a page_load and page_exit. For simplicity, assume a user has only 1 session per day and if there are multiple of the same events on that day, consider only the latest page_load and earliest page_exit, with an obvious restriction that load time event should happen before exit time event . Output the user_id and their average session time.
 
